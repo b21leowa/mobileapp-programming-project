@@ -15,9 +15,6 @@
         app:popupTheme="@style/AppTheme.PopupOverlay"
         app:titleTextColor="#ffffff"/>
 
-
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"

@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView.setAdapter(eventAdapter);
         new JsonTask(this).execute(JSON_URL);
+
+
     }
 
     public void onPostExecute(String json) {
