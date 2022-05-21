@@ -9,6 +9,8 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -18,8 +20,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements JsonTask.JsonTaskListener {
 
-    ArrayList<Event> eventList = new ArrayList<>();
-
+    private ArrayList<Event> eventList = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private EventAdapter eventAdapter;
     private final String JSON_URL = "https://mobprog.webug.se/json-api?login=b21leowa";
 
     @Override
@@ -29,8 +32,11 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        recyclerView = findViewById(R.id.recyclerView);
+        eventAdapter = new EventAdapter(this, eventList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recyclerView.setAdapter(eventAdapter);
         new JsonTask(this).execute(JSON_URL);
-
     }
 
     public void onPostExecute(String json) {
@@ -38,7 +44,8 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         Type type = new TypeToken<ArrayList<Event>>() {}.getType();
         ArrayList<Event> fetchedEventList = gson.fromJson(json, type);
         eventList.addAll(fetchedEventList);
-        System.out.println(eventList.get(0).getName());
+        eventAdapter.notifyDataSetChanged();
+        System.out.println(eventList.get(0).getAuxdata().getDatum());
     }
 
     @Override
