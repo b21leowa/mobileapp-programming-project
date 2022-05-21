@@ -76,7 +76,10 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
 
     @Override
     public void onItemClicked(Event event) {
+        Gson gson = new Gson();
+        String eventJson = gson.toJson(event);
         Intent intent = new Intent(MainActivity.this, EventDetail.class);
+        intent.putExtra("Event", eventJson);
         startActivity(intent);
         System.out.println(event.getName());
     }

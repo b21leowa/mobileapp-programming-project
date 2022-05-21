@@ -56,10 +56,17 @@ public class Event {
         return size;
     }
 
+    public String getSizeString() {
+        return "" +size;
+    }
+
     public int getCost() {
         return cost;
     }
 
+    public String getCostString() {
+        return ""+cost;
+    }
     public Auxdata getAuxdata() {
         return auxdata;
     }
