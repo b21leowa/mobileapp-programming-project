@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginBottom="8dp"
-    android:layout_marginTop="8dp">
+    android:layout_marginTop="8dp"
+    android:id="@+id/item_container">
 
     <ImageView
         android:scaleType="centerCrop"

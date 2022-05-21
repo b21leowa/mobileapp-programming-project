@@ -18,7 +18,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements JsonTask.JsonTaskListener {
+public class MainActivity extends AppCompatActivity implements JsonTask.JsonTaskListener, SelectListener {
 
     private ArrayList<Event> eventList = new ArrayList<>();
     private RecyclerView recyclerView;
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         setSupportActionBar(toolbar);
 
         recyclerView = findViewById(R.id.recyclerView);
-        eventAdapter = new EventAdapter(this, eventList);
+        eventAdapter = new EventAdapter(this, eventList, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView.setAdapter(eventAdapter);
         new JsonTask(this).execute(JSON_URL);
@@ -74,4 +74,10 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onItemClicked(Event event) {
+        Intent intent = new Intent(MainActivity.this, EventDetail.class);
+        startActivity(intent);
+        System.out.println(event.getName());
+    }
 }

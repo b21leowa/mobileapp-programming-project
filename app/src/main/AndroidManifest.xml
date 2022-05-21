@@ -19,7 +19,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AboutPage"
+        <activity
+            android:name=".AboutPage"
+            android:exported="false">
+
+        </activity>
+        <activity
+            android:name=".EventDetail"
             android:exported="false">
 
         </activity>
