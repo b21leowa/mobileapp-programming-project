@@ -2,6 +2,7 @@ package com.example.project;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,8 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements JsonTask.JsonTaskListener {
+
+    private final String JSON_URL = "https://mobprog.webug.se/json-api?login=b21leowa";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +24,14 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        new JsonTask(this).execute(JSON_URL);
 
+    }
 
+    public void onPostExecute(String json) {
+        Gson gson = new Gson();
+
+        Log.d("MainActivity", json);
     }
 
     @Override
