@@ -10,10 +10,15 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements JsonTask.JsonTaskListener {
+
+    ArrayList<Event> eventList = new ArrayList<>();
 
     private final String JSON_URL = "https://mobprog.webug.se/json-api?login=b21leowa";
 
@@ -30,8 +35,10 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
 
     public void onPostExecute(String json) {
         Gson gson = new Gson();
-
-        Log.d("MainActivity", json);
+        Type type = new TypeToken<ArrayList<Event>>() {}.getType();
+        ArrayList<Event> fetchedEventList = gson.fromJson(json, type);
+        eventList.addAll(fetchedEventList);
+        System.out.println(eventList.get(0).getName());
     }
 
     @Override
