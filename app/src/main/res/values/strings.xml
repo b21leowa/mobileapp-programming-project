@@ -4,4 +4,6 @@
     <string name="event_title">Event title</string>
     <string name="event_location">Event location</string>
     <string name="event_date">Datum</string>
+    <string name="about_page">About page</string>
+    <string name="filter">Filter</string>
 </resources>

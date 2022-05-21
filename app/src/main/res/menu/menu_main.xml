@@ -3,4 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.webviewapp.MainActivity">
+    <item android:orderInCategory="1"
+        android:title="@string/filter">
+       <menu>
+           <item
+               android:orderInCategory="1"
+               android:title="@string/filter"
+               />
+       </menu>
+
+    </item>
+
+    <item
+        android:id="@+id/about_page"
+        android:title="@string/about_page"
+        android:orderInCategory="2"
+        />
 </menu>
