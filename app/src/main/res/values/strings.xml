@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">B21leowa Project</string>
+    <string name="app_name">PartyBuddies</string>
     <string name="event">Event</string>
     <string name="event_title">Event title</string>
     <string name="event_location">Event location</string>
@@ -8,5 +8,6 @@
     <string name="event_guest">Guest</string>
     <string name="event_cost">Cost</string>
     <string name="event_category">category</string>
-    <string name="about_page">Målgrupp för PartyBuddies är personer som vill festa rejält. När man festar festar man då festar man rejält </string>
+    <string name="page_about">About page</string>
+    <string name="about_page">Målgruppen för PartyBuddies är personer som vill festa rejält. När man festar festar man då festar man rejält. Det är även bra att använda PartyBuddies för att bjuda in familj och bekanta till sin egna festivitet eller högtid. Målgruppen för denna app är alla som ska gå eller tar ansvarar om tillställningar </string>
 </resources>
