@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Project</string>
+    <string name="event">Event</string>
+    <string name="event_title">Event title</string>
+    <string name="event_location">Event location</string>
+    <string name="event_date">Datum</string>
 </resources>
