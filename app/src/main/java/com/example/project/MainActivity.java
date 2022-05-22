@@ -15,12 +15,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class MainActivity extends AppCompatActivity implements JsonTask.JsonTaskListener, SelectListener {
 
     private ArrayList<Event> eventList = new ArrayList<>();
+    private ArrayList<Event> filterList = new ArrayList<>();
     private RecyclerView recyclerView;
     private EventAdapter eventAdapter;
     private final String JSON_URL = "https://mobprog.webug.se/json-api?login=b21leowa";
@@ -33,21 +38,19 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         setSupportActionBar(toolbar);
 
         recyclerView = findViewById(R.id.recyclerView);
-        eventAdapter = new EventAdapter(this, eventList, this);
+        eventAdapter = new EventAdapter(this, filterList, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView.setAdapter(eventAdapter);
         new JsonTask(this).execute(JSON_URL);
-
-
     }
 
     public void onPostExecute(String json) {
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<Event>>() {}.getType();
         ArrayList<Event> fetchedEventList = gson.fromJson(json, type);
+        filterList.addAll(fetchedEventList);
         eventList.addAll(fetchedEventList);
         eventAdapter.notifyDataSetChanged();
-        System.out.println(eventList.get(0).getAuxdata().getDatum());
     }
 
     @Override
@@ -71,7 +74,41 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
             return true;
         }
 
+        if (id == R.id.small_cost) {
+            removeBigCost(filterList);
+        }
+
+        if(id == R.id.big_cost) {
+           removeSmallCost(filterList);
+        }
+
+        if(id == R.id.reset_list) {
+            filterList.clear();
+            filterList.addAll(eventList);
+            eventAdapter.notifyDataSetChanged();
+        }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    public void removeBigCost(ArrayList<Event> event) {
+        for (int i = 0; i < filterList.size(); i++){
+            if (filterList.get(i).getCost() > 50) {
+                filterList.remove(filterList.get(i));
+                i--;
+            }
+        }
+        eventAdapter.notifyDataSetChanged();
+    }
+
+    public void removeSmallCost(ArrayList<Event> event) {
+        for (int i = 0; i < filterList.size(); i++) {
+            if(filterList.get(i).getCost() <= 50) {
+                filterList.remove(filterList.get(i));
+                i--;
+            }
+        }
+        eventAdapter.notifyDataSetChanged();
     }
 
     @Override

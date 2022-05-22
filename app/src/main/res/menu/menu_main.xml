@@ -7,9 +7,20 @@
         android:title="@string/filter">
        <menu>
            <item
-               android:orderInCategory="1"
-               android:title="@string/filter"
+               android:id="@+id/small_cost"
+               android:orderInCategory="2"
+               android:title="@string/small_cost"
                />
+           <item
+               android:id="@+id/big_cost"
+               android:orderInCategory="2"
+               android:title="@string/big_cost"
+               />
+           <item
+               android:id="@+id/reset_list"
+               android:orderInCategory="3"
+               android:title="@string/filter_reset"/>
+
        </menu>
 
     </item>
