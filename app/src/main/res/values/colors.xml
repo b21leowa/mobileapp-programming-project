@@ -3,4 +3,5 @@
     <color name="colorPrimary">#1410D6</color>
     <color name="colorPrimaryDark">#090771</color>
     <color name="colorAccent">#383840</color>
+    <color name="recyclerCard">#C4C4C4</color>
 </resources>
