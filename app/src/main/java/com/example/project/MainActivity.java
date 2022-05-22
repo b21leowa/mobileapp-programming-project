@@ -1,6 +1,7 @@
 package com.example.project;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -29,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
     private RecyclerView recyclerView;
     private EventAdapter eventAdapter;
     private final String JSON_URL = "https://mobprog.webug.se/json-api?login=b21leowa";
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor editPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +48,24 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
     }
 
     public void onPostExecute(String json) {
+
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<Event>>() {}.getType();
         ArrayList<Event> fetchedEventList = gson.fromJson(json, type);
         filterList.addAll(fetchedEventList);
         eventList.addAll(fetchedEventList);
+        prefs = getSharedPreferences("filter", MODE_PRIVATE);
+
+        if(prefs.getString("filter", "default").equals("bigCost")) {
+
+            removeSmallCost(filterList);
+        }
+        if(prefs.getString("filter", "default").equals("smallCost")) {
+            removeBigCost(filterList);
+        }
+        if(prefs.getString("filter", "default").equals("resetList")) {
+            resetCost(filterList);
+        }
         eventAdapter.notifyDataSetChanged();
     }
 
@@ -75,20 +91,42 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         }
 
         if (id == R.id.small_cost) {
+            String filter = "smallCost";
+            prefs = getSharedPreferences("filter", MODE_PRIVATE);
+            editPrefs = prefs.edit();
+            editPrefs.putString("filter", filter);
+            editPrefs.apply();
+
             removeBigCost(filterList);
         }
 
         if(id == R.id.big_cost) {
+            String filter = "bigCost";
+            prefs = getSharedPreferences("filter", MODE_PRIVATE);
+            editPrefs = prefs.edit();
+            editPrefs.putString("filter", filter);
+            editPrefs.apply();
+
            removeSmallCost(filterList);
         }
 
         if(id == R.id.reset_list) {
-            filterList.clear();
-            filterList.addAll(eventList);
-            eventAdapter.notifyDataSetChanged();
+            String filter = "resetList";
+            prefs = getSharedPreferences("filter", MODE_PRIVATE);
+            editPrefs = prefs.edit();
+            editPrefs.putString("filter", filter);
+            editPrefs.apply();
+
+            resetCost(filterList);
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void resetCost(ArrayList<Event> event) {
+        filterList.clear();
+        filterList.addAll(eventList);
+        eventAdapter.notifyDataSetChanged();
     }
 
     public void removeBigCost(ArrayList<Event> event) {
