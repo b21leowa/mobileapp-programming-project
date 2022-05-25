@@ -45,16 +45,15 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView.setAdapter(eventAdapter);
         new JsonTask(this).execute(JSON_URL);
+        prefs = getSharedPreferences("filter", MODE_PRIVATE);
     }
 
     public void onPostExecute(String json) {
-
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<Event>>() {}.getType();
         ArrayList<Event> fetchedEventList = gson.fromJson(json, type);
         filterList.addAll(fetchedEventList);
         eventList.addAll(fetchedEventList);
-        prefs = getSharedPreferences("filter", MODE_PRIVATE);
 
         if(prefs.getString("filter", "default").equals("bigCost")) {
 
@@ -156,6 +155,5 @@ public class MainActivity extends AppCompatActivity implements JsonTask.JsonTask
         Intent intent = new Intent(MainActivity.this, EventDetail.class);
         intent.putExtra("Event", eventJson);
         startActivity(intent);
-        System.out.println(event.getName());
     }
 }
