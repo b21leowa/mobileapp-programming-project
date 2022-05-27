@@ -161,6 +161,8 @@ TextView eventCategory = findViewById(R.id.event_category);
 
 
 Design sketch
+
+
 ![](About.png)
 ![](b21leowaproject.png)
 ![](EventView.png)
